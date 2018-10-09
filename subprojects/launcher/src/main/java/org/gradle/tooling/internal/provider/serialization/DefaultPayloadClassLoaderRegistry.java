@@ -101,7 +101,7 @@ public class DefaultPayloadClassLoaderRegistry implements PayloadClassLoaderRegi
             Set<URL> currentClassPath = ImmutableSet.copyOf(urlClassLoader.getURLs());
             for (URL url : spec.getClasspath()) {
                 if (!currentClassPath.contains(url)) {
-                    JavaReflectionUtil.method(URLClassLoader.class, Void.class, "addURL", URL.class).invoke(urlClassLoader, url);
+                    urlClassLoader.addURL(url);
                 }
             }
         }

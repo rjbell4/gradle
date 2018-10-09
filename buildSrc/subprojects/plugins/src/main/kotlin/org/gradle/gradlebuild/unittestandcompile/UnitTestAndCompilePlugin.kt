@@ -198,6 +198,20 @@ class UnitTestAndCompilePlugin : Plugin<Project> {
             if (javaInstallationForTest.javaVersion.isJava9Compatible) {
                 //allow embedded executer to modify environment variables
                 jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
+                //allow embedded executer to inject legacy types into the system classloader
+                jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+                //for codenarc tests
+                jvmArgs("--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/java.security=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/java.math=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/java.net=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/sun.net.www.protocol.jar=ALL-UNNAMED")
+                //for directory walker tests
+                jvmArgs("--add-opens", "java.base/java.io=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/java.nio.file=ALL-UNNAMED")
+                jvmArgs("--add-opens", "java.base/java.nio.charset=ALL-UNNAMED")
+                jvmArgs("--illegal-access=deny")
             }
             // Includes JVM vendor and major version
             inputs.property("javaInstallation", Callable { javaInstallationForTest.vendorAndMajorVersion })
